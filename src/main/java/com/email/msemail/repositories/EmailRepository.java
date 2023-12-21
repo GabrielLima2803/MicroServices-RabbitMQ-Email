@@ -7,5 +7,5 @@ import com.email.msemail.model.Email;
 
 
 
-public interface EmailRepository extends JpaRepository<Email, UUID> {
+public interface EmailRepository extends JpaRepository<Email, Long> {
 }
