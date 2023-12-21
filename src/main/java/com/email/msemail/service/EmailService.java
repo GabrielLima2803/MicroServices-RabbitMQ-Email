@@ -1,12 +1,17 @@
 package com.email.msemail.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.email.msemail.enums.StatusEmail;
 import com.email.msemail.model.Email;
@@ -34,8 +39,18 @@ public class EmailService {
             emailModel.setStatusEmail(StatusEmail.SENT);
         } catch (MailException e) {
             emailModel.setStatusEmail(StatusEmail.ERROR);
-        } finally {
-             return emailRepository.save(emailModel);
+            e.printStackTrace();
         }
+
+        return emailRepository.save(emailModel);
+    }
+
+    public Page<Email> findAll(Pageable pageable) {
+        return emailRepository.findAll(pageable);
+    }
+
+    public Optional<Email> findById(Long id) {
+        return emailRepository.findById(id);
     }
 }
+
